@@ -6,7 +6,7 @@ class python {
   package { $required: ensure => latest }
 
   $path = $operatingsystem ? {
-    /(?i-mx:centos|fedora|redhat|scientific)/ => '/var/virt',
+    /(?i-mx:centos|fedora|redhat|scientific)/ => '/var/virts',
   }
 
   file { $path:
@@ -21,7 +21,7 @@ class python {
 define python::instance ( $user = 'deploy',
                           $group = 'deploy' ) {
   $path = $operatingsystem ? {
-    /(?i-mx:centos|fedora|redhat|scientific)/ => '/var/virt',
+    /(?i-mx:centos|fedora|redhat|scientific)/ => '/var/virts',
   }
 
   file { "$path/$name":
