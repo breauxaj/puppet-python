@@ -11,3 +11,11 @@ include python
 ```
 python::instance { 'sandbox': user=> 'deploy', group => 'deploy' }
 ```
+
+License
+-------
+GPL3
+
+Contact
+-------
+breauxaj AT gmail DOT com
