@@ -11,12 +11,12 @@ class python {
     ],
   }
 
-  package { $required:
-    ensure => latest
-  }
-
   $path = $::operatingsystem ? {
     /(?i-mx:centos|fedora|redhat|scientific)/ => '/var/virtual',
+  }
+
+  package { $required:
+    ensure => latest
   }
 
   file { $path:
