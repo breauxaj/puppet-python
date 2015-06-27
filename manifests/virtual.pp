@@ -1,9 +1,9 @@
-define python::instance (
+define python::virtual (
   $user = 'deploy',
   $group = 'deploy'
 ) {
   $path = $::operatingsystem ? {
-    /(?i-mx:centos|fedora|redhat|scientific)/ => '/var/virts',
+    /(?i-mx:centos|fedora|redhat|scientific)/ => '/var/virtual',
   }
 
   file { "${path}/${name}":

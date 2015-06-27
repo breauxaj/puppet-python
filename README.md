@@ -1,7 +1,7 @@
 python
 ======
 
-Installs python and additional tools. Can deploy basic instances to /var/virts.
+Installs python and additional tools. Can deploy basic instances to /var/virtual.
 
 Samples
 -------
@@ -9,7 +9,10 @@ Samples
 include python
 ```
 ```
-python::instance { 'sandbox': user=> 'deploy', group => 'deploy' }
+python::virtual { 'sandbox': user=> 'deploy', group => 'deploy' }
+```
+```
+python::modules { 'urllib': }
 ```
 
 License
