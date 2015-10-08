@@ -26,7 +26,7 @@ class python {
     mode   => '0755',
   }
 
-  file { '/usr/bin/python-pip':
+  file { '/usr/bin/pip-python':
     ensure  => 'link',
     owner   => 'root',
     group   => 'root',
