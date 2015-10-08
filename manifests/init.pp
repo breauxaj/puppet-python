@@ -26,4 +26,12 @@ class python {
     mode   => '0755',
   }
 
+  file { '/usr/bin/python-pip':
+    ensure  => 'link',
+    owner   => 'root',
+    group   => 'root',
+    target  => "/usr/bin/pip",
+    require => Package['python-pip'],
+  }
+
 }
