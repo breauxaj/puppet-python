@@ -5,6 +5,10 @@ class python (
     '2.7': {
       $required = $::operatingsystem ? {
         /(?i-mx:centos|fedora|redhat|scientific)/ => [
+          'python',
+          'python-pip',
+          'python-setuptools',
+          'python-virtualenv',
           'python27',
           'python27-pip',
           'python27-setuptools',
@@ -32,10 +36,7 @@ class python (
           'python',
           'python-pip',
           'python-setuptools',
-          'python-virtualenv',
-          'python-virtualenv-clone',
-          'python-virtualenvcontext',
-          'python-virtualenvwrapper'
+          'python-virtualenv'
         ],
       }
         
