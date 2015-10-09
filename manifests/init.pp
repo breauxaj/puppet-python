@@ -34,12 +34,26 @@ class python (
     default: {
       $required = $::operatingsystem ? {
         /(?i-mx:centos|fedora|redhat|scientific)/ => [
-          'python'
+          'python',
+          'python-pip'
+        ],
+      }
+
+      $managed = $::operatingsystem ? {
+        /(?i-mx:centos|fedora|redhat|scientific)/ => [
+          'pip',
+          'setuptools',
+          'virtualenv'
         ],
       }
 
       package { $required:
         ensure => latest
+      }
+
+      package { $managed:
+        ensure   => latest,
+        provider => 'pip'
       }
 
     }
