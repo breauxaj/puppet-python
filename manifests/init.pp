@@ -24,11 +24,12 @@ class python (
         gpgkey         => 'http://springdale.math.ias.edu/data/puias/6/x86_64/os/RPM-GPG-KEY-puias',
         descr          => 'PUIAS Computational Base $releasever - $basearch',
       }
-    
+
       package { $required:
         ensure => latest,
         require => Yumrepo['puias-computational'],
       }
+
     }
     default: {
       $required = $::operatingsystem ? {
@@ -39,19 +40,20 @@ class python (
           'python-virtualenv'
         ],
       }
-        
+
       package { $required:
         ensure => latest
       }
-      
-      file { '/usr/bin/pip-python':
-        ensure  => 'link',
-        owner   => 'root',
-        group   => 'root',
-        target  => "/usr/bin/pip",
-        require => Package['python-pip'],
-      }
+
     }
+  }
+
+  file { '/usr/bin/pip-python':
+    ensure  => 'link',
+    owner   => 'root',
+    group   => 'root',
+    target  => "/usr/bin/pip",
+    require => Package['python-pip'],
   }
 
 }
