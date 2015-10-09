@@ -34,10 +34,7 @@ class python (
     default: {
       $required = $::operatingsystem ? {
         /(?i-mx:centos|fedora|redhat|scientific)/ => [
-          'python',
-          'python-pip',
-          'python-setuptools',
-          'python-virtualenv'
+          'python'
         ],
       }
 
