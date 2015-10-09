@@ -1,37 +1,56 @@
-class python {
-  $required = $::operatingsystem ? {
-    /(?i-mx:centos|fedora|redhat|scientific)/ => [
-      'python',
-      'python-pip',
-      'python-setuptools',
-      'python-virtualenv',
-      'python-virtualenv-clone',
-      'python-virtualenvcontext',
-      'python-virtualenvwrapper'
-    ],
-  }
+class python (
+  $version = '2.6'
+){
+  case $version {
+    '2.7': {
+      $required = $::operatingsystem ? {
+        /(?i-mx:centos|fedora|redhat|scientific)/ => [
+          'python27',
+          'python27-pip',
+          'python27-setuptools',
+          'python27-virtualenv'
+        ],
+      }
 
-  $path = $::operatingsystem ? {
-    /(?i-mx:centos|fedora|redhat|scientific)/ => '/var/virtual',
-  }
-
-  package { $required:
-    ensure => latest
-  }
-
-  file { $path:
-    ensure => directory,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-  }
-
-  file { '/usr/bin/pip-python':
-    ensure  => 'link',
-    owner   => 'root',
-    group   => 'root',
-    target  => "/usr/bin/pip",
-    require => Package['python-pip'],
+      yumrepo { 'puias-computational':
+        mirrorlist     => 'http://puias.math.ias.edu/data/puias/computational/$releasever/$basearch/mirrorlist',
+        failovermethod => 'priority',
+        enabled        => '1',
+        gpgcheck       => '1',
+        gpgkey         => 'http://springdale.math.ias.edu/data/puias/6/x86_64/os/RPM-GPG-KEY-puias',
+        descr          => 'PUIAS Computational Base $releasever - $basearch',
+      }
+    
+      package { $required:
+        ensure => latest,
+        require => Yumrepo['puias-computational'],
+      }
+    }
+    default: {
+      $required = $::operatingsystem ? {
+        /(?i-mx:centos|fedora|redhat|scientific)/ => [
+          'python',
+          'python-pip',
+          'python-setuptools',
+          'python-virtualenv',
+          'python-virtualenv-clone',
+          'python-virtualenvcontext',
+          'python-virtualenvwrapper'
+        ],
+      }
+        
+      package { $required:
+        ensure => latest
+      }
+      
+      file { '/usr/bin/pip-python':
+        ensure  => 'link',
+        owner   => 'root',
+        group   => 'root',
+        target  => "/usr/bin/pip",
+        require => Package['python-pip'],
+      }
+    }
   }
 
 }
