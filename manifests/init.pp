@@ -2,32 +2,22 @@ class python (
   $version = '2.6'
 ){
   case $version {
+    '3': {
+      $required = $::operatingsystem ? {
+        /(?i-mx:centos|fedora|redhat|scientific)/ => [
+          'python',
+          'python-pip',
+          'python3',
+        ],
+      }
+    }
     '2.7': {
       $required = $::operatingsystem ? {
         /(?i-mx:centos|fedora|redhat|scientific)/ => [
           'python',
           'python-pip',
-          'python-setuptools',
-          'python-virtualenv',
           'python27',
-          'python27-pip',
-          'python27-setuptools',
-          'python27-virtualenv'
         ],
-      }
-
-      yumrepo { 'puias-computational':
-        mirrorlist     => 'http://puias.math.ias.edu/data/puias/computational/$releasever/$basearch/mirrorlist',
-        failovermethod => 'priority',
-        enabled        => '1',
-        gpgcheck       => '1',
-        gpgkey         => 'http://springdale.math.ias.edu/data/puias/6/x86_64/os/RPM-GPG-KEY-puias',
-        descr          => 'PUIAS Computational Base $releasever - $basearch',
-      }
-
-      package { $required:
-        ensure => latest,
-        require => Yumrepo['puias-computational'],
       }
 
     }
@@ -39,24 +29,35 @@ class python (
         ],
       }
 
-      $managed = $::operatingsystem ? {
-        /(?i-mx:centos|fedora|redhat|scientific)/ => [
-          'pip',
-          'setuptools',
-          'virtualenv'
-        ],
-      }
-
-      package { $required:
-        ensure => latest
-      }
-
-      package { $managed:
-        ensure   => latest,
-        provider => 'pip'
-      }
-
     }
+  }
+
+  yumrepo { 'puias-computational':
+    mirrorlist     => 'http://puias.math.ias.edu/data/puias/computational/$releasever/$basearch/mirrorlist',
+    failovermethod => 'priority',
+    enabled        => '1',
+    gpgcheck       => '1',
+    gpgkey         => 'http://springdale.math.ias.edu/data/puias/6/x86_64/os/RPM-GPG-KEY-puias',
+    descr          => 'PUIAS Computational Base $releasever - $basearch',
+  }
+
+  $managed = $::operatingsystem ? {
+    /(?i-mx:centos|fedora|redhat|scientific)/ => [
+      'pip',
+      'setuptools',
+      'virtualenv'
+    ],
+  }
+
+  package { $required:
+    ensure => latest,
+    require => Yumrepo['puias-computational'],
+  }
+
+  package { $managed:
+    ensure   => latest,
+    provider => 'pip'
+    require  => File['/usr/bin/pip-python'],
   }
 
   file { '/usr/bin/pip-python':
