@@ -44,6 +44,7 @@ class python (
   $managed = $::operatingsystem ? {
     /(?i-mx:centos|fedora|redhat|scientific)/ => [
       'pip',
+      'pyOpenSSL',
       'setuptools',
       'virtualenv'
     ],
