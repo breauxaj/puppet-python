@@ -56,7 +56,7 @@ class python (
 
   package { $managed:
     ensure   => latest,
-    provider => 'pip'
+    provider => 'pip',
     require  => File['/usr/bin/pip-python'],
   }
 
