@@ -41,7 +41,7 @@ class python::rhel6 (
   }
 
   package { $required:
-    ensure => latest,
+    ensure  => latest,
     require => Yumrepo['puias-computational'],
   }
 
@@ -55,7 +55,7 @@ class python::rhel6 (
     ensure  => 'link',
     owner   => 'root',
     group   => 'root',
-    target  => "/usr/bin/pip",
+    target  => '/usr/bin/pip',
     require => Package['python-pip'],
   }
 
