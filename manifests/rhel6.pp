@@ -34,6 +34,7 @@ class python::rhel6 (
 
   $managed = $::operatingsystem ? {
     /(?i-mx:centos|fedora|redhat|scientific)/ => [
+      'fabric',
       'pip',
       'setuptools',
       'virtualenv'
